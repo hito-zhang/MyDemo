@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-aspectjx'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.hito.demo"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        //必须，告知RxHttp你依赖的okhttp版本，目前已适配 v3.12.0 - v4.8.1版本  (v4.3.0除外)
+                        rxhttp_okhttp : '4.8.1',
+                        //使用asXxx方法时必须，告知RxHttp你依赖的rxjava版本，可传入rxjava2、rxjava3
+                        rxhttp_rxjava : 'rxjava3',
+                        rxhttp_package: 'rxhttp',  //非必须，指定RxHttp类包名
+                ]
+            }
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    //注解绑定view
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+
+    implementation 'com.github.zhujiang521:AndroidAOP:1.1.1'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
+    implementation 'com.ljx.rxhttp:rxhttp:2.4.0'
+    annotationProcessor 'com.ljx.rxhttp:rxhttp-compiler:2.4.0'
+    implementation 'com.ljx.rxlife3:rxlife-rxjava:3.0.0'
+    implementation 'com.ljx.rxhttp:converter-fastjson:2.4.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation "io.reactivex.rxjava3:rxjava:3.0.6"
+}
